@@ -63,6 +63,7 @@ class SimpleFacerec:
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = self.known_face_names[best_match_index]
+
             face_names.append(name)
 
         # Convert to numpy array to adjust coordinates with frame resizing quickly
