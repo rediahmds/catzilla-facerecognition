@@ -6,7 +6,7 @@ Gunadarma's Catzilla Face Recognition program. It is a simple program that lever
 
 ### Prerequisites
 
-Make sure you have `opencv` and `face-recognition` are installed.
+Make sure you have `opencv` and `face-recognition` installed.
 
 ### Installation
 
