@@ -1,0 +1,23 @@
+name: Update Dev Branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Switch to Dev Branch
+        run: git checkout dev
+
+      - name: Merge Main into Dev
+        run: git merge main
+
+      - name: Push Changes to Dev
+        run: git push origin dev
