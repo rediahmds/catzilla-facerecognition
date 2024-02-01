@@ -13,8 +13,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Switch to Dev Branch
-        run: git checkout dev
+      - name: Checkout Dev Branch
+        run: |
+          git checkout dev || true
 
       - name: Merge Main into Dev
         run: git merge main
