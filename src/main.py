@@ -42,7 +42,8 @@ while True:
         cv2.imshow('Zoomed Face', zoomed_face)
 
     # Resize and display the original frame
-    resized_frame = resize_frame(frame, scale=2.0, width=1280, height=720)
+    resized_frame = resize_frame(frame, scale=2.0)
+    cv2.resizeWindow("Catzilla Cam", 720, 720)
     cv2.imshow("Catzilla Cam", resized_frame)
 
     key = cv2.waitKey(1)
