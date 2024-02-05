@@ -4,6 +4,11 @@ from frameresizer.frameresizer import resize_frame
 
 
 def main():
+        
+        CATZILLA_FRAME_NAME = "Catzilla Cam"
+        CATZILLA_FRAME_SIZE = 720
+        ZOOMED_FRAME_NAME = "Zoomed Face"
+
 
         # Encode faces from a folder
         sfr = SimpleFacerec()
@@ -11,7 +16,7 @@ def main():
 
         # Load Camera
         cap = cv2.VideoCapture(0)
-        cv2.namedWindow("Catzilla Cam", cv2.WINDOW_NORMAL)
+        cv2.namedWindow(CATZILLA_FRAME_NAME, cv2.WINDOW_NORMAL)
 
         # Zoom factor (adjust as needed)
         zoom_factor = 2.0
@@ -42,12 +47,14 @@ def main():
 
                 # Crop and display the zoomed-in face
                 zoomed_face = frame[new_y1:new_y2, new_x1:new_x2]
-                cv2.imshow('Zoomed Face', zoomed_face)
+                cv2.imshow(ZOOMED_FRAME_NAME, zoomed_face)
+                cv2.moveWindow(ZOOMED_FRAME_NAME, CATZILLA_FRAME_SIZE + 100, 100)
 
             # Resize and display the original frame
             resized_frame = resize_frame(frame, scale=2.0)
-            cv2.resizeWindow("Catzilla Cam", 720, 720)
-            cv2.imshow("Catzilla Cam", resized_frame)
+            cv2.resizeWindow(CATZILLA_FRAME_NAME, CATZILLA_FRAME_SIZE, CATZILLA_FRAME_SIZE)
+            cv2.imshow(CATZILLA_FRAME_NAME, resized_frame)
+            cv2.moveWindow(CATZILLA_FRAME_NAME, 100, 100)
 
             key = cv2.waitKey(1)
             if key == 27:
