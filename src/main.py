@@ -1,5 +1,6 @@
 import cv2
 from simple_facerec import SimpleFacerec
+from frameresizer.frameresizer import resize_frame
 
 # Encode faces from a folder
 sfr = SimpleFacerec()
@@ -7,7 +8,7 @@ sfr.load_encoding_images("images/")
 
 # Load Camera
 cap = cv2.VideoCapture(0)
-
+cv2.namedWindow("Catzilla Cam", cv2.WINDOW_NORMAL)
 
 while True:
     ret, frame = cap.read()
@@ -20,7 +21,8 @@ while True:
         cv2.putText(frame, name,(x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 200, 0), 2)
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 200, 0), 4)
 
-    cv2.imshow("Frame", frame)
+    resizedframe = resize_frame(frame, scale=10.0)
+    cv2.imshow("Catzilla Cam", resizedframe)
 
     key = cv2.waitKey(1)
     if key == 27:
