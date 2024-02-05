@@ -22,6 +22,6 @@ def resize_frame(frame, scale=None, width=None, height=None):
         width = int((height / frame.shape[0]) * frame.shape[1])
 
     # Resize the frame
-    resized_frame = cv2.resize(frame, (width, height))
+    resized_frame = cv2.resize(frame, (width, height)) # type: ignore
 
     return resized_frame
