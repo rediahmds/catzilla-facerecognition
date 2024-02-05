@@ -2,53 +2,59 @@ import cv2
 from simple_facerec import SimpleFacerec
 from frameresizer.frameresizer import resize_frame
 
-# Encode faces from a folder
-sfr = SimpleFacerec()
-sfr.load_encoding_images("images/")
 
-# Load Camera
-cap = cv2.VideoCapture(0)
-cv2.namedWindow("Catzilla Cam", cv2.WINDOW_NORMAL)
+def main():
 
-# Zoom factor (adjust as needed)
-zoom_factor = 2.0
+        # Encode faces from a folder
+        sfr = SimpleFacerec()
+        sfr.load_encoding_images("images/")
 
-while True:
-    ret, frame = cap.read()
+        # Load Camera
+        cap = cv2.VideoCapture(0)
+        cv2.namedWindow("Catzilla Cam", cv2.WINDOW_NORMAL)
 
-    # Detect Faces
-    face_locations, face_names = sfr.detect_known_faces(frame)
-    for face_loc, name in zip(face_locations, face_names):
-        y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
+        # Zoom factor (adjust as needed)
+        zoom_factor = 2.0
 
-        # Calculate the new face region
-        new_x1 = int(x1 - (zoom_factor - 1) * (x2 - x1) / 2)
-        new_y1 = int(y1 - (zoom_factor - 1) * (y2 - y1) / 2)
-        new_x2 = int(x2 + (zoom_factor - 1) * (x2 - x1) / 2)
-        new_y2 = int(y2 + (zoom_factor - 1) * (y2 - y1) / 2)
+        while True:
+            ret, frame = cap.read()
 
-        # Ensure the new region is within the frame boundaries
-        new_x1 = max(0, new_x1)
-        new_y1 = max(0, new_y1)
-        new_x2 = min(frame.shape[1], new_x2)
-        new_y2 = min(frame.shape[0], new_y2)
+            # Detect Faces
+            face_locations, face_names = sfr.detect_known_faces(frame)
+            for face_loc, name in zip(face_locations, face_names):
+                y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
 
-        # Draw rectangle and text on the original frame
-        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 200, 0), 4)
-        cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 200, 0), 2)
+                # Calculate the new face region
+                new_x1 = int(x1 - (zoom_factor - 1) * (x2 - x1) / 2)
+                new_y1 = int(y1 - (zoom_factor - 1) * (y2 - y1) / 2)
+                new_x2 = int(x2 + (zoom_factor - 1) * (x2 - x1) / 2)
+                new_y2 = int(y2 + (zoom_factor - 1) * (y2 - y1) / 2)
 
-        # Crop and display the zoomed-in face
-        zoomed_face = frame[new_y1:new_y2, new_x1:new_x2]
-        cv2.imshow('Zoomed Face', zoomed_face)
+                # Ensure the new region is within the frame boundaries
+                new_x1 = max(0, new_x1)
+                new_y1 = max(0, new_y1)
+                new_x2 = min(frame.shape[1], new_x2)
+                new_y2 = min(frame.shape[0], new_y2)
 
-    # Resize and display the original frame
-    resized_frame = resize_frame(frame, scale=2.0)
-    cv2.resizeWindow("Catzilla Cam", 720, 720)
-    cv2.imshow("Catzilla Cam", resized_frame)
+                # Draw rectangle and text on the original frame
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 200, 0), 4)
+                cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 200, 0), 2)
 
-    key = cv2.waitKey(1)
-    if key == 27:
-        break
+                # Crop and display the zoomed-in face
+                zoomed_face = frame[new_y1:new_y2, new_x1:new_x2]
+                cv2.imshow('Zoomed Face', zoomed_face)
 
-cap.release()
-cv2.destroyAllWindows()
+            # Resize and display the original frame
+            resized_frame = resize_frame(frame, scale=2.0)
+            cv2.resizeWindow("Catzilla Cam", 720, 720)
+            cv2.imshow("Catzilla Cam", resized_frame)
+
+            key = cv2.waitKey(1)
+            if key == 27:
+                break
+
+        cap.release()
+        cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    main()
