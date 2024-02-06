@@ -19,7 +19,7 @@ def main():
         cv2.namedWindow(CATZILLA_FRAME_NAME, cv2.WINDOW_NORMAL)
 
         # Zoom factor (adjust as needed)
-        zoom_factor = 2.0
+        ZOOM_FACTOR = 2.0
 
         while True:
             ret, frame = cap.read()
@@ -30,10 +30,10 @@ def main():
                 y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
 
                 # Calculate the new face region
-                new_x1 = int(x1 - (zoom_factor - 1) * (x2 - x1) / 2)
-                new_y1 = int(y1 - (zoom_factor - 1) * (y2 - y1) / 2)
-                new_x2 = int(x2 + (zoom_factor - 1) * (x2 - x1) / 2)
-                new_y2 = int(y2 + (zoom_factor - 1) * (y2 - y1) / 2)
+                new_x1 = int(x1 - (ZOOM_FACTOR - 1) * (x2 - x1) / 2)
+                new_y1 = int(y1 - (ZOOM_FACTOR - 1) * (y2 - y1) / 2)
+                new_x2 = int(x2 + (ZOOM_FACTOR - 1) * (x2 - x1) / 2)
+                new_y2 = int(y2 + (ZOOM_FACTOR - 1) * (y2 - y1) / 2)
 
                 # Ensure the new region is within the frame boundaries
                 new_x1 = max(0, new_x1)
